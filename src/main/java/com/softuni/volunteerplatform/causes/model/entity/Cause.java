@@ -8,7 +8,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "causes")
 @Getter
-@Setter
+
 public class Cause {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,7 +23,20 @@ public class Cause {
     @Enumerated(EnumType.STRING)
     private Level level;
 
+    public Cause setName(String name) {
+        this.name = name;
+        return this;
+    }
 
+    public Cause setDescription(String description) {
+        this.description = description;
+        return this;
+    }
+
+    public Cause setLevel(Level level) {
+        this.level = level;
+        return this;
+    }
 
 
 }
