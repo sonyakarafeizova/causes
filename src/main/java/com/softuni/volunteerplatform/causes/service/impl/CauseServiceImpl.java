@@ -5,9 +5,12 @@ import com.softuni.volunteerplatform.causes.model.dtos.CauseDTO;
 import com.softuni.volunteerplatform.causes.model.entity.Cause;
 import com.softuni.volunteerplatform.causes.repository.CauseRepository;
 import com.softuni.volunteerplatform.causes.service.CauseService;
+import com.softuni.volunteerplatform.causes.service.exception.CauseNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedModel;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -30,12 +33,21 @@ public class CauseServiceImpl implements CauseService {
         return causeRepository
                 .findById(id)
                 .map(CauseServiceImpl::map)
-                .orElse(null);
+                .orElseThrow(CauseNotFoundException::new);
     }
+
+    @Override
+    public PagedModel<CauseDTO> getAllCauses(Pageable pageable) {
+        return new PagedModel<>(causeRepository
+                .findAll(pageable)
+                .map(CauseServiceImpl::map));
+    }
+
+
     private static CauseDTO map(Cause cause) {
         return new CauseDTO(
                cause.getId(),
-                cause.getName(),
+                cause.getTitle(),
                 cause.getDescription(),
                 cause.getLevel()
         );
@@ -43,9 +55,10 @@ public class CauseServiceImpl implements CauseService {
 
     private static Cause map(AddCauseDTO addCauseDTO){
         return new Cause()
-                .setName(addCauseDTO.name())
+                .setTitle(addCauseDTO.title())
                 .setDescription(addCauseDTO.description())
                 .setLevel(addCauseDTO.level());
 
     }
+
 }

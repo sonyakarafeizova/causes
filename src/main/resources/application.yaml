@@ -1,10 +1,13 @@
+server:
+  port: 8081  # Портът на сървъра (може да го промените на 8082, ако 8081 е зает)
+  #  address: 127.0.0.1  # Това ще направи сървъра достъпен само за локалния компютър
+
 spring:
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
     url: "jdbc:mysql://localhost:3306/causes?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC"
     username: root
     password: 12345
-
 
   jpa:
     defer-datasource-initialization: true
@@ -13,14 +16,13 @@ spring:
         format_sql: true
     hibernate:
       ddl-auto: update
+
   sql:
     init:
       mode: never
+
   mvc:
     hiddenmethod:
       filter:
         enabled: true
-
-        server:
-          port: 8081
 

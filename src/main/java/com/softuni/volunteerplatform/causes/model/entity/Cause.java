@@ -3,7 +3,6 @@ package com.softuni.volunteerplatform.causes.model.entity;
 import com.softuni.volunteerplatform.causes.model.enums.Level;
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.Setter;
 
 @Entity
 @Table(name = "causes")
@@ -15,7 +14,7 @@ public class Cause {
     private Long id;
 
     @Column(nullable = false, unique = true)
-    private String name;
+    private String title;
 
     @Column(columnDefinition = "TEXT")
     private String description;
@@ -23,8 +22,8 @@ public class Cause {
     @Enumerated(EnumType.STRING)
     private Level level;
 
-    public Cause setName(String name) {
-        this.name = name;
+    public Cause setTitle(String title) {
+        this.title = title;
         return this;
     }
 
