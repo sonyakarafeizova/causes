@@ -12,8 +12,8 @@ import org.springframework.data.web.PagedModel;
 
 public interface CauseService {
     CauseDTO createCause(AddCauseDTO addCauseDTO);
+
     CauseDTO getCauseById(Long id);
     PagedModel<CauseDTO> getAllCauses(Pageable pageable);
-
 
 }
