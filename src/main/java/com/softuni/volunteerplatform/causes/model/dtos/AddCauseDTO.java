@@ -5,7 +5,8 @@ import com.softuni.volunteerplatform.causes.model.enums.Level;
 public record AddCauseDTO (
     String title,
     String description,
-    Level level
+    Level level,
+    String imageUrl
 ){
 
 }

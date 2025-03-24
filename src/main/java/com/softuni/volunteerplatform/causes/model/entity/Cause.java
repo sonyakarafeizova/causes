@@ -22,6 +22,14 @@ public class Cause {
     @Enumerated(EnumType.STRING)
     private Level level;
 
+    public Cause setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+        return this;
+    }
+
+    @Column(name = "image_url")
+    private String imageUrl;
+
     public Cause setTitle(String title) {
         this.title = title;
         return this;

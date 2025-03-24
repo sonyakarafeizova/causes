@@ -1,6 +1,5 @@
 server:
-  port: 8081  # Портът на сървъра (може да го промените на 8082, ако 8081 е зает)
-  #  address: 127.0.0.1  # Това ще направи сървъра достъпен само за локалния компютър
+  port: 8081
 
 spring:
   datasource:
@@ -21,8 +20,5 @@ spring:
     init:
       mode: never
 
-  mvc:
-    hiddenmethod:
-      filter:
-        enabled: true
+
 
