@@ -24,7 +24,7 @@ import java.util.List;
 public class CauseController {
     private static final Logger LOGGER = LoggerFactory.getLogger(CauseController.class);
     private final CauseService causeService;
-    private final CauseRepository causeRepository;
+
 
 
     @GetMapping
