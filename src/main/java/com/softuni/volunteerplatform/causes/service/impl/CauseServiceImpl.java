@@ -63,7 +63,8 @@ public class CauseServiceImpl implements CauseService {
                 cause.getTitle(),
                 cause.getDescription(),
                 cause.getLevel(),
-                cause.getImageUrl()
+                cause.getImageUrl(),
+                cause.getCreated()
         );
     }
 
@@ -72,7 +73,9 @@ public class CauseServiceImpl implements CauseService {
                 .setTitle(addCauseDTO.title())
                 .setDescription(addCauseDTO.description())
                 .setLevel(addCauseDTO.level())
-                .setImageUrl(addCauseDTO.imageUrl());
+                .setImageUrl(addCauseDTO.imageUrl())
+                .setCreated(addCauseDTO.created())
+                .setAuthorName(addCauseDTO.authorName());
 
     }
 

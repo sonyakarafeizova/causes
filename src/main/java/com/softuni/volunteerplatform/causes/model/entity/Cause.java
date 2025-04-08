@@ -3,6 +3,9 @@ package com.softuni.volunteerplatform.causes.model.entity;
 import com.softuni.volunteerplatform.causes.model.enums.Level;
 import jakarta.persistence.*;
 import lombok.Getter;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "causes")
@@ -21,6 +24,12 @@ public class Cause {
 
     @Enumerated(EnumType.STRING)
     private Level level;
+    @CreationTimestamp
+    @Column(updatable = false)
+    private LocalDateTime created;
+
+    @Column(name = "author_name")
+    private String authorName;
 
     public Cause setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
@@ -45,5 +54,18 @@ public class Cause {
         return this;
     }
 
+    public Cause setId(Long id) {
+        this.id = id;
+        return this;
+    }
 
+    public  Cause setCreated(LocalDateTime created) {
+        this.created = created;
+        return this;
+    }
+
+    public Cause setAuthorName(String authorName) {
+        this.authorName = authorName;
+        return this;
+    }
 }
