@@ -11,4 +11,3 @@ spring:
   sql:
     init:
       mode: never
-

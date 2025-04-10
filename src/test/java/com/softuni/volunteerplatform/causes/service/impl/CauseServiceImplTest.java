@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -33,18 +34,15 @@ public class CauseServiceImplTest {
     private Cause cause;
 
     @BeforeEach
-    public void setUp() {
-        // Подготовка на тестовите данни
+    void setUp() {
         addCauseDTO = new AddCauseDTO(
-                "Test Title",
-                "Test Description",
+                "TestTitle",
+                "TestDescription",
                 Level.JUNIOR,
-                "http://example.com/image.png",
-                "Test Author",
+                "http://example.com/test.png",
+                "TestAuthor",
                 LocalDateTime.now()
         );
-
-        // Настройваме entity-то, както го създава мапингът в service‑а
         cause = new Cause()
                 .setTitle(addCauseDTO.title())
                 .setDescription(addCauseDTO.description())
@@ -52,67 +50,46 @@ public class CauseServiceImplTest {
                 .setImageUrl(addCauseDTO.imageUrl())
                 .setCreated(addCauseDTO.created())
                 .setAuthorName(addCauseDTO.authorName());
-        // Задаваме ID, както би го имал след като е записано в базата данни
         cause.setId(1L);
     }
 
     @Test
-    public void testCreateCause() {
-        // Подканяме repository‑то да върне вече "създадената" причина
+    void testCreateCause() {
         when(causeRepository.save(any(Cause.class))).thenReturn(cause);
-
         CauseShortInfoDTO result = causeService.createCause(addCauseDTO);
-
-        // Проверяваме, че връщания DTO съдържа съответната информация
         assertNotNull(result);
         assertEquals(cause.getId(), result.id());
         assertEquals(cause.getTitle(), result.title());
-        // Проверка на допълнителни атрибути по аналогия
-
-        // Верифицираме, че методът save е извикан веднъж
         verify(causeRepository, times(1)).save(any(Cause.class));
     }
 
     @Test
-    public void testDeleteCause() {
-        // Изтриваме без да връщаме стойност
+    void testDeleteCause() {
         doNothing().when(causeRepository).deleteById(anyLong());
-
         causeService.deleteCause(1L);
-
-        // Потвърждаваме, че изтриването е извикано
         verify(causeRepository, times(1)).deleteById(1L);
     }
 
     @Test
-    public void testGetAllCauses() {
-        // Настройка – repository връща списък с един запис
+    void testGetAllCauses() {
         when(causeRepository.findAll()).thenReturn(List.of(cause));
-
-        List<CauseShortInfoDTO> causes = causeService.getAllCauses();
-
-        assertNotNull(causes);
-        assertEquals(1, causes.size());
-        assertEquals(cause.getId(), causes.get(0).id());
+        List<CauseShortInfoDTO> result = causeService.getAllCauses();
+        assertNotNull(result);
+        assertEquals(1, result.size());
+        assertEquals(cause.getId(), result.get(0).id());
     }
 
     @Test
-    public void testGetCauseById_Success() {
-        // Настройка – repository връща Optional с нашия запис
+    void testGetCauseById_Success() {
         when(causeRepository.findById(1L)).thenReturn(Optional.of(cause));
-
         CauseShortInfoDTO result = causeService.getCauseById(1L);
-
         assertNotNull(result);
         assertEquals(cause.getId(), result.id());
     }
 
     @Test
-    public void testGetCauseById_NotFound() {
-        // Настройка – repository връща празен Optional
+    void testGetCauseById_NotFound() {
         when(causeRepository.findById(1L)).thenReturn(Optional.empty());
-
-        // Очакваме изключение CauseNotFoundException при опит за намиране
         assertThrows(CauseNotFoundException.class, () -> causeService.getCauseById(1L));
     }
 }

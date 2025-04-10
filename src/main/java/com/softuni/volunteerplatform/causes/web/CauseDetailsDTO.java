@@ -19,7 +19,7 @@ public class CauseDetailsDTO {
     private String authorName;
     private LocalDateTime created;
     private List<String> imageUrl;
-    private List<CauseDetailsCommentDTO> comments;
+
 
 
 
